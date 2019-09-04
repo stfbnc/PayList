@@ -1,0 +1,4 @@
+<resources>
+    <string name="app_name">PayList</string>
+    <string name="search_box_hint">Cerca nome</string>
+</resources>
