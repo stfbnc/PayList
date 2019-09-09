@@ -1,4 +1,9 @@
 <resources>
     <string name="app_name">PayList</string>
-    <string name="search_box_hint">Cerca nome</string>
+    <string name="search_box_hint">Cerca</string>
+    <string name="date_period">Periodo:</string>
+    <string name="dates_sep">-></string>
+    <string name="fab_new">Inserisci nuovo</string>
+    <string name="fab_stats">Visualizza statistiche</string>
+    <string name="fab_filter">Filtra record</string>
 </resources>

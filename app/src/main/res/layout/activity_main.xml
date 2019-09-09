@@ -5,6 +5,14 @@
     android:orientation="vertical"
     android:id="@+id/main_layout">
 
+    <TextView
+        android:id="@+id/date_period"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textStyle="bold"
+        android:textColor="@color/black"
+        android:layout_gravity="center_horizontal"/>
+
     <EditText
         android:id="@+id/search_box"
         android:labelFor="@+id/search_box"
@@ -30,25 +38,31 @@
         android:layout_marginBottom="5dp"
         android:layout_weight="1"/>
 
-    <LinearLayout
-        android:id="@+id/bottom_btns"
-        android:layout_width="match_parent"
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/fab_new"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal"
-        android:orientation="horizontal">
+        android:layout_gravity="end|bottom"
+        android:src="@drawable/fab_insert"
+        android:contentDescription="@string/fab_new"
+        android:layout_margin="12dp" />
 
-        <Button
-            android:id="@+id/see_all"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:padding="5dp"/>
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/fab_filter"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="end|bottom"
+        android:src="@drawable/fab_filter"
+        android:contentDescription="@string/fab_filter"
+        android:layout_margin="12dp" />
 
-        <Button
-            android:id="@+id/insert_new"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:padding="5dp"/>
-
-    </LinearLayout>
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/fab_stats"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="end|bottom"
+        android:src="@drawable/fab_stats"
+        android:contentDescription="@string/fab_stats"
+        android:layout_margin="12dp" />
 
 </LinearLayout>
