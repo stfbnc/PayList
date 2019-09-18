@@ -1,4 +1,4 @@
-package com.papp.paylist;
+package com.papp.paylist.main;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;

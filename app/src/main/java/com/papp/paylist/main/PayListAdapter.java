@@ -1,4 +1,4 @@
-package com.papp.paylist;
+package com.papp.paylist.main;
 
 import android.content.Context;
 import android.database.Cursor;
@@ -8,6 +8,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.papp.paylist.R;
+import com.papp.paylist.base.BaseActivity;
 import com.papp.paylist.db.DataManager;
 
 import java.util.ArrayList;
@@ -15,21 +17,20 @@ import java.util.ArrayList;
 public class PayListAdapter extends RecyclerView.Adapter<PayListAdapter.ViewHolder> {
 
     private ArrayList<Integer> mList;
-    private DataManager dataManager;
     private Context ctx;
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
-        public TextView name, money;
+        public TextView type, money, data;
         public ViewHolder(View v) {
             super(v);
-            name = v.findViewById(R.id.name);
+            type = v.findViewById(R.id.type);
             money = v.findViewById(R.id.money);
+            data = v.findViewById(R.id.data);
         }
     }
 
-    public PayListAdapter(DataManager dataManager, ArrayList<Integer> mList) {
+    public PayListAdapter(ArrayList<Integer> mList) {
         this.mList = mList;
-        this.dataManager = dataManager;
     }
 
     @Override
@@ -45,11 +46,19 @@ public class PayListAdapter extends RecyclerView.Adapter<PayListAdapter.ViewHold
     public void onBindViewHolder(PayListAdapter.ViewHolder holder, int position) {
         if(mList.size() > 0) {
             Integer tab_id = mList.get(position);
-            Cursor c = dataManager.dbSelectByUrno(tab_id);
+            DataManager dataManager = new DataManager(ctx);
+            Cursor c = dataManager.paytabSelectById(tab_id);
             if(c.getCount() > 0) {
                 c.moveToNext();
-                holder.name.setText(c.getString(0));
-                holder.money.setText(String.valueOf(c.getDouble(1)));
+                holder.type.setText(c.getString(DataManager.PAYTAB_TYPE_IDX));
+                holder.money.setText(String.valueOf(c.getDouble(DataManager.PAYTAB_EURO_IDX)));
+                int ioro = c.getInt(DataManager.PAYTAB_IORO_IDX);
+                if(ioro == BaseActivity.INCOME)
+                    holder.money.setTextColor(ctx.getResources().getColor(R.color.green));
+                else if(ioro == BaseActivity.OUTFLOW)
+                    holder.money.setTextColor(ctx.getResources().getColor(R.color.red));
+                BaseActivity base = new BaseActivity();
+                holder.data.setText(base.getAppFormatDate(c.getString(DataManager.PAYTAB_DATE_IDX)));
             }
         }
     }
