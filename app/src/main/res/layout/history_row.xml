@@ -1,13 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:attr="http://schemas.android.com/apk/res-auto"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:id="@+id/paylist_row"
+    android:id="@+id/hiatory_row"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_centerHorizontal="true"
     android:layout_gravity="center_horizontal"
     android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/update"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        android:layout_marginStart="15dp"
+        android:layout_marginEnd="15dp"
+        android:textSize="@dimen/app_text_size_big"
+        android:textStyle="bold"
+        android:textColor="@color/black"/>
 
     <LinearLayout
         android:id="@+id/row_1"
@@ -75,17 +84,6 @@
             android:paddingStart="5dp"
             android:textColor="@color/black"/>
 
-        <android.support.design.widget.FloatingActionButton
-            android:id="@+id/fab_history"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            attr:fabSize="mini"
-            android:elevation="0dp"
-            app:elevation="0dp"
-            android:layout_gravity="center"
-            android:src="@drawable/history"
-            android:contentDescription="@string/fab_history" />
-
     </LinearLayout>
 
     <LinearLayout
@@ -121,13 +119,44 @@
 
     </LinearLayout>
 
+    <LinearLayout
+        android:id="@+id/row_4"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginTop="5dp"
+        android:layout_marginStart="15dp"
+        android:layout_marginEnd="15dp">
+
+        <ImageView
+            android:id="@+id/img_descr"
+            android:layout_width="@dimen/img_box_size"
+            android:layout_height="@dimen/img_box_size"
+            android:gravity="center"
+            android:layout_gravity="center"
+            android:scaleType="fitCenter"
+            android:adjustViewBounds="true"
+            android:src="@drawable/descr_icon"/>
+
+        <TextView
+            android:id="@+id/descr"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/img_box_size"
+            android:gravity="start|center_vertical"
+            android:layout_gravity="center"
+            android:textStyle="bold"
+            android:textSize="@dimen/app_text_size"
+            android:layout_marginStart="10dp"
+            android:paddingStart="5dp"
+            android:textColor="@color/black"/>
+
+    </LinearLayout>
+
     <TextView
         android:id="@+id/div"
         android:layout_width="match_parent"
         android:layout_height="2dp"
         android:layout_marginTop="5dp"
-        android:layout_marginStart="12dp"
-        android:layout_marginEnd="12dp"
         android:background="@color/colorPrimary"/>
 
 </LinearLayout>

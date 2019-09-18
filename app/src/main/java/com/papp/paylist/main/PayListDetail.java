@@ -14,11 +14,11 @@ import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.Spinner;
+import android.widget.Toast;
 
 import com.papp.paylist.R;
 import com.papp.paylist.base.BaseActivity;
 import com.papp.paylist.db.DataManager;
-import com.papp.paylist.insert.InsertActivity;
 import com.papp.paylist.insert.NewType;
 
 import java.text.SimpleDateFormat;
@@ -41,6 +41,7 @@ public class PayListDetail extends BaseActivity {
     private int urno, oldIoro;
     private String oldDate, oldDscr, oldType;
     private double oldEuro;
+    private boolean modifyClicked = false;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -73,17 +74,26 @@ public class PayListDetail extends BaseActivity {
         ok_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                backupData();
-                updateData();
-                finish();
+                if(modifyClicked){
+                    boolean ret = updateData();
+                    if(ret){
+                        backupData();
+                        finish();
+                    }else{
+                        Toast.makeText(context, getResources().getString(R.string.save_btn_string), Toast.LENGTH_LONG).show();
+                    }
+                }else{
+                    Toast.makeText(context, getResources().getString(R.string.save_btn_string), Toast.LENGTH_LONG).show();
+                }
             }
         });
 
-        Button modify_button = findViewById(R.id.modify_btn);
+        final Button modify_button = findViewById(R.id.modify_btn);
         modify_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 enableWidgets();
+                modifyClicked = true;
             }
         });
 
@@ -160,15 +170,23 @@ public class PayListDetail extends BaseActivity {
             oldEuro = c.getDouble(DataManager.PAYTAB_EURO_IDX);
             euro.setText(String.valueOf(oldEuro));
             oldIoro = c.getInt(DataManager.PAYTAB_IORO_IDX);
-            if(oldIoro == INCOME)
+            if(oldIoro == INCOME) {
+                income_radio.setChecked(true);
+                outflow_radio.setChecked(false);
+                clickedRadio = INCOME;
                 euro.setTextColor(getResources().getColor(R.color.green));
-            else if(oldIoro == OUTFLOW)
+            }else if(oldIoro == OUTFLOW) {
+                income_radio.setChecked(false);
+                outflow_radio.setChecked(true);
+                clickedRadio = OUTFLOW;
                 euro.setTextColor(getResources().getColor(R.color.red));
+            }
             oldDate = c.getString(DataManager.PAYTAB_DATE_IDX);
             insertDate.setText(getAppFormatDate(oldDate));
             oldDscr = c.getString(DataManager.PAYTAB_DSCR_IDX);
             note.setText(oldDscr);
         }
+        c.close();
     }
 
     @Override
@@ -183,6 +201,7 @@ public class PayListDetail extends BaseActivity {
         Cursor c = dm.typtabSelectTypes();
         while(c.moveToNext())
             spinner_list.add(c.getString(0));
+        c.close();
         type_adapter.notifyDataSetChanged();
     }
 
@@ -210,19 +229,27 @@ public class PayListDetail extends BaseActivity {
         radio_lin.setVisibility(View.VISIBLE);
     }
 
-    private void updateData(){
-        Bundle bndl = new Bundle();
-        String et_date = insertDate.getText().toString();
-        bndl.putString(DataManager.PAYTAB_DATE, getDbFormatDate(et_date));
-        SimpleDateFormat df = new SimpleDateFormat("yyyyMMdd", Locale.ITALY);
-        String date = df.format(Calendar.getInstance().getTime());
-        bndl.putString(DataManager.PAYTAB_LSTU, date);
-        bndl.putString(DataManager.PAYTAB_DSCR, note.getText().toString());
-        bndl.putDouble(DataManager.PAYTAB_EURO, Double.valueOf(euro.getText().toString()));
-        bndl.putString(DataManager.PAYTAB_TYPE, type_spinner.getSelectedItem().toString());
-        bndl.putInt(DataManager.PAYTAB_IORO, clickedRadio);
-        DataManager dm = new DataManager(context);
-        dm.paytabUpdate(urno, bndl);
+    private boolean updateData(){
+        String et_date = getDbFormatDate(insertDate.getText().toString());
+        String dscr = note.getText().toString();
+        double eu = Double.valueOf(euro.getText().toString());
+        String tp = type_spinner.getSelectedItem().toString();
+        if(et_date.equals(oldDate) && dscr.equals(oldDscr) && eu == oldEuro && tp.equals(oldType) && clickedRadio == oldIoro){
+            return false;
+        }else {
+            Bundle bndl = new Bundle();
+            bndl.putString(DataManager.PAYTAB_DATE, et_date);
+            SimpleDateFormat df = new SimpleDateFormat("yyyyMMdd", Locale.ITALY);
+            String date = df.format(Calendar.getInstance().getTime());
+            bndl.putString(DataManager.PAYTAB_LSTU, date);
+            bndl.putString(DataManager.PAYTAB_DSCR, dscr);
+            bndl.putDouble(DataManager.PAYTAB_EURO, eu);
+            bndl.putString(DataManager.PAYTAB_TYPE, tp);
+            bndl.putInt(DataManager.PAYTAB_IORO, clickedRadio);
+            DataManager dm = new DataManager(context);
+            dm.paytabUpdate(urno, bndl);
+            return true;
+        }
     }
 
     private void backupData(){

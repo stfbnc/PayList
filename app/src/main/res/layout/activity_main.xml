@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:tools="http://schemas.android.com/tools"
@@ -39,6 +40,8 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 attr:fabSize="mini"
+                android:elevation="0dp"
+                app:elevation="0dp"
                 android:src="@drawable/view_all"
                 android:contentDescription="@string/fab_all" />
 
@@ -64,17 +67,17 @@
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
+        android:orientation="horizontal"
         android:layout_gravity="bottom|end">
 
-        <android.support.design.widget.FloatingActionButton
-            android:id="@+id/fab_new"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="end|bottom"
-            android:src="@drawable/fab_insert"
-            android:contentDescription="@string/fab_new"
-            android:layout_margin="12dp" />
+        <!--android.support.design.widget.FloatingActionButton
+           android:id="@+id/fab_stats"
+           android:layout_width="wrap_content"
+           android:layout_height="wrap_content"
+           android:layout_gravity="end|bottom"
+           android:src="@drawable/fab_stats"
+           android:contentDescription="@string/fab_stats"
+           android:layout_margin="12dp" /-->
 
         <android.support.design.widget.FloatingActionButton
             android:id="@+id/fab_filter"
@@ -85,14 +88,14 @@
             android:contentDescription="@string/fab_filter"
             android:layout_margin="12dp" />
 
-        <!--android.support.design.widget.FloatingActionButton
-            android:id="@+id/fab_stats"
+        <android.support.design.widget.FloatingActionButton
+            android:id="@+id/fab_new"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="end|bottom"
-            android:src="@drawable/fab_stats"
-            android:contentDescription="@string/fab_stats"
-            android:layout_margin="12dp" /-->
+            android:src="@drawable/fab_insert"
+            android:contentDescription="@string/fab_new"
+            android:layout_margin="12dp" />
 
     </LinearLayout>
 

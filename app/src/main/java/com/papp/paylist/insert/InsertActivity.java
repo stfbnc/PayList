@@ -133,6 +133,7 @@ public class InsertActivity extends BaseActivity {
         Cursor c = dm.typtabSelectTypes();
         while(c.moveToNext())
             spinner_list.add(c.getString(0));
+        c.close();
         type_adapter.notifyDataSetChanged();
     }
 

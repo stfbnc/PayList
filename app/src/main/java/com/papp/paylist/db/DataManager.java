@@ -1,5 +1,6 @@
 package com.papp.paylist.db;
 
+import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
@@ -81,13 +82,21 @@ public class DataManager {
                 PAYTAB_EURO+" = "+bndl.getDouble(PAYTAB_EURO)+", "+
                 PAYTAB_TYPE+" = '"+bndl.getString(PAYTAB_TYPE)+"', "+
                 PAYTAB_IORO+" = "+bndl.getInt(PAYTAB_IORO)+
-                " WHERE "+bndl.getInt(PAYTAB_ID)+" = "+urno+";";
+                " WHERE "+PAYTAB_ID+" = "+urno+";";
         Log.i("paytabUpdate() = ", query);
         db.execSQL(query);
+        /*ContentValues values = new ContentValues();
+        values.put(PAYTAB_DATE, bndl.getString(PAYTAB_DATE));
+        values.put(PAYTAB_LSTU, bndl.getString(PAYTAB_LSTU));
+        values.put(PAYTAB_DSCR, bndl.getString(PAYTAB_DSCR));
+        values.put(PAYTAB_EURO, bndl.getDouble(PAYTAB_EURO));
+        values.put(PAYTAB_TYPE, bndl.getString(PAYTAB_TYPE));
+        values.put(PAYTAB_IORO, bndl.getInt(PAYTAB_IORO));
+        db.update(PAYTAB, values, PAYTAB_ID+" = "+urno, null);*/
     }
 
     public void paytabDelete(Integer urno){
-        String query = "DELETE FROM "+PAYTAB+" WHERE "+PAYTAB_ID+" = '"+urno+"';";
+        String query = "DELETE FROM "+PAYTAB+" WHERE "+PAYTAB_ID+" = "+urno+";";
         Log.i("paytabDelete() = ", query);
         db.execSQL(query);
     }
@@ -156,6 +165,16 @@ public class DataManager {
                 bndl.getDouble(UPDTAB_EURO)+", '"+bndl.getString(UPDTAB_TYPE)+"', "+bndl.getInt(UPDTAB_IORO)+", "+bndl.getInt(UPDTAB_UPAY)+");";
         Log.i("updtabInsert() = ", query);
         db.execSQL(query);
+    }
+
+    public Cursor updtabSelectIds(Integer urno){
+        Cursor c = db.rawQuery("SELECT "+UPDTAB_ID+" FROM "+UPDTAB+" WHERE "+UPDTAB_UPAY+" = "+urno+" ORDER BY "+UPDTAB_CDAT+" DESC;", null);
+        return c;
+    }
+
+    public Cursor updtabSelectById(Integer urno){
+        Cursor c = db.rawQuery("SELECT * FROM "+UPDTAB+" WHERE "+UPDTAB_ID+" = "+urno+";", null);
+        return c;
     }
 
     public int countRows(String table){

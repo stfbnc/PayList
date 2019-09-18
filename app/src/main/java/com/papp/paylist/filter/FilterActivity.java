@@ -67,29 +67,34 @@ public class FilterActivity extends BaseActivity {
         setSpinnerItems();
 
         income_radio = findViewById(R.id.radio_income);
+        outflow_radio = findViewById(R.id.radio_outflow);
+        both_radio = findViewById(R.id.radio_both);
+
         income_radio.setChecked(false);
         income_radio.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 clickedRadio = INCOME;
+                both_radio.setChecked(false);
             }
         });
 
-        outflow_radio = findViewById(R.id.radio_outflow);
         outflow_radio.setChecked(false);
         outflow_radio.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 clickedRadio = OUTFLOW;
+                both_radio.setChecked(false);
             }
         });
 
-        both_radio = findViewById(R.id.radio_both);
         both_radio.setChecked(true);
         both_radio.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 clickedRadio = BOTH;
+                income_radio.setChecked(false);
+                outflow_radio.setChecked(false);
             }
         });
 
@@ -169,6 +174,7 @@ public class FilterActivity extends BaseActivity {
         Cursor c = dm.typtabSelectTypes();
         while(c.moveToNext())
             spinner_list.add(c.getString(0));
+        c.close();
         type_adapter.notifyDataSetChanged();
     }
 

@@ -1,5 +1,6 @@
 package com.papp.paylist.main;
 
+import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
 import android.support.design.widget.FloatingActionButton;
@@ -13,6 +14,7 @@ import android.widget.TextView;
 
 import com.papp.paylist.base.BaseActivity;
 import com.papp.paylist.filter.FilterActivity;
+import com.papp.paylist.history.HistoryDetail;
 import com.papp.paylist.insert.InsertActivity;
 import com.papp.paylist.R;
 import com.papp.paylist.db.DataManager;
@@ -25,26 +27,36 @@ public class MainActivity extends BaseActivity {
     private ArrayList<Integer> paylist;
     private PayListAdapter adapter;
     private Bundle filtered_bundle = new Bundle();
+    private Context context;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        context = this;
 
         date_range = findViewById(R.id.date_range);
 
-        RecyclerView rec_paylist = findViewById(R.id.recycle_paylist);
+        final RecyclerView rec_paylist = findViewById(R.id.recycle_paylist);
         rec_paylist.setHasFixedSize(true);
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this);
         rec_paylist.setLayoutManager(layoutManager);
         paylist = new ArrayList<>();
         adapter = new PayListAdapter(paylist);
         rec_paylist.setAdapter(adapter);
-        rec_paylist.addOnItemTouchListener(new RecyclerItemClickListener(this, new RecyclerItemClickListener.OnItemClickListener() {
-            @Override public void onItemClick(View view, int position) {
-                openDetails(position);
+        adapter.setOnItemClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                openDetails(rec_paylist.getChildAdapterPosition(v));
             }
-        }));
+        });
+        adapter.setHistoryButtonListener(new PayListAdapter.OnHistoryButtonClickListener() {
+            @Override
+            public void onHistoryClick(View button, int position) {
+                HistoryDetail h_det = new HistoryDetail(context, paylist.get(position));
+                h_det.showHistory();
+            }
+        });
         getPayList(false);
 
         FloatingActionButton fab_all = findViewById(R.id.fab_all);
@@ -139,6 +151,7 @@ public class MainActivity extends BaseActivity {
                 date1 = getAppFormatDate(c.getString(DataManager.PAYTAB_DATE_IDX));
             idx++;
         }
+        c.close();
         String txt = getResources().getString(R.string.date_period)+" "+date1+" "+getResources().getString(R.string.dates_sep)+" "+date2;
         date_range.setText(txt);
         adapter.notifyDataSetChanged();

@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:attr="http://schemas.android.com/apk/res-auto"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     style="?android:attr/buttonBarStyle"
     android:id="@+id/insert_scroll"
     android:layout_width="match_parent"
@@ -115,6 +116,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 attr:fabSize="mini"
+                android:elevation="0dp"
+                app:elevation="0dp"
                 android:layout_gravity="center"
                 android:src="@drawable/fab_insert"
                 android:contentDescription="@string/fab_new" />

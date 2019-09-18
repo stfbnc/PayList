@@ -20,4 +20,6 @@
     <string name="empty_type">-</string>
     <string name="start_date">Start date</string>
     <string name="end_date">End date</string>
+    <string name="record_update">Updated on</string>
+    <string name="save_btn_string">You have not modified anything yet!</string>
 </resources>

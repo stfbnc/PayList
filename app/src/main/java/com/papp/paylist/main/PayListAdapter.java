@@ -2,6 +2,7 @@ package com.papp.paylist.main;
 
 import android.content.Context;
 import android.database.Cursor;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -16,21 +17,37 @@ import java.util.ArrayList;
 
 public class PayListAdapter extends RecyclerView.Adapter<PayListAdapter.ViewHolder> {
 
+    public interface OnHistoryButtonClickListener {
+        void onHistoryClick(View button, int position);
+    }
+
     private ArrayList<Integer> mList;
     private Context ctx;
+    View.OnClickListener clickListener;
+    OnHistoryButtonClickListener historyButtonListener;
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
         public TextView type, money, data;
+        public FloatingActionButton fab_hist;
         public ViewHolder(View v) {
             super(v);
             type = v.findViewById(R.id.type);
             money = v.findViewById(R.id.money);
             data = v.findViewById(R.id.data);
+            fab_hist = v.findViewById(R.id.fab_history);
         }
     }
 
     public PayListAdapter(ArrayList<Integer> mList) {
         this.mList = mList;
+    }
+
+    public void setOnItemClickListener(View.OnClickListener clickListener) {
+        this.clickListener = clickListener;
+    }
+
+    public void setHistoryButtonListener(OnHistoryButtonClickListener historyButtonListener) {
+        this.historyButtonListener = historyButtonListener;
     }
 
     @Override
@@ -43,9 +60,10 @@ public class PayListAdapter extends RecyclerView.Adapter<PayListAdapter.ViewHold
     }
 
     @Override
-    public void onBindViewHolder(PayListAdapter.ViewHolder holder, int position) {
+    public void onBindViewHolder(final PayListAdapter.ViewHolder holder, int position) {
+        holder.itemView.setOnClickListener(clickListener);
         if(mList.size() > 0) {
-            Integer tab_id = mList.get(position);
+            final Integer tab_id = mList.get(position);
             DataManager dataManager = new DataManager(ctx);
             Cursor c = dataManager.paytabSelectById(tab_id);
             if(c.getCount() > 0) {
@@ -59,7 +77,14 @@ public class PayListAdapter extends RecyclerView.Adapter<PayListAdapter.ViewHold
                     holder.money.setTextColor(ctx.getResources().getColor(R.color.red));
                 BaseActivity base = new BaseActivity();
                 holder.data.setText(base.getAppFormatDate(c.getString(DataManager.PAYTAB_DATE_IDX)));
+                holder.fab_hist.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        historyButtonListener.onHistoryClick(view, holder.getAdapterPosition());
+                    }
+                });
             }
+            c.close();
         }
     }
 
