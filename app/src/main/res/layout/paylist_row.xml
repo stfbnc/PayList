@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:attr="http://schemas.android.com/apk/res-auto"
     android:id="@+id/paylist_row"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
@@ -61,15 +62,26 @@
 
         <TextView
             android:id="@+id/money"
-            android:layout_width="match_parent"
+            android:layout_width="0dp"
             android:layout_height="@dimen/img_box_size"
             android:gravity="start|center_vertical"
             android:layout_gravity="center"
             android:textStyle="bold"
             android:textSize="@dimen/app_text_size"
             android:layout_marginStart="10dp"
+            android:layout_marginEnd="15dp"
+            android:layout_weight="1"
             android:paddingStart="5dp"
             android:textColor="@color/black"/>
+
+        <android.support.design.widget.FloatingActionButton
+            android:id="@+id/fab_history"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            attr:fabSize="mini"
+            android:layout_gravity="center"
+            android:src="@drawable/fab_insert"
+            android:contentDescription="@string/fab_history" />
 
     </LinearLayout>
 

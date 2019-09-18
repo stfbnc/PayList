@@ -6,6 +6,7 @@
     <string name="fab_stats">Get stats</string>
     <string name="fab_filter">Filter records</string>
     <string name="fab_all">View all</string>
+    <string name="fab_history">History</string>
     <string name="cancel_button">Cancel</string>
     <string name="ok_button">Save</string>
     <string name="modify_button">Modify</string>
