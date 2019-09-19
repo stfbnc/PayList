@@ -4,7 +4,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
 import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -18,6 +17,7 @@ import com.papp.paylist.history.HistoryDetail;
 import com.papp.paylist.insert.InsertActivity;
 import com.papp.paylist.R;
 import com.papp.paylist.db.DataManager;
+import com.papp.paylist.stats.StatsActivity;
 
 import java.util.ArrayList;
 
@@ -84,14 +84,13 @@ public class MainActivity extends BaseActivity {
             }
         });
 
-        /*FloatingActionButton fab_stats = findViewById(R.id.fab_stats);
+        FloatingActionButton fab_stats = findViewById(R.id.fab_stats);
         fab_stats.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Snackbar.make(view, "Here's a Snackbar", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
+                openStats();
             }
-        });*/
+        });
     }
 
     @Override
@@ -114,6 +113,11 @@ public class MainActivity extends BaseActivity {
     private void openFilter(){
         Intent intent = new Intent(getApplication(), FilterActivity.class);
         startActivityForResult(intent, FilterActivity.TAG);
+    }
+
+    private void openStats(){
+        Intent intent = new Intent(getApplication(), StatsActivity.class);
+        startActivity(intent, null);
     }
 
     @Override

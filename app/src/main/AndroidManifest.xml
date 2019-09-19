@@ -34,6 +34,10 @@
             android:name=".filter.FilterActivity"
             android:screenOrientation="portrait" />
 
+        <activity
+            android:name=".stats.StatsActivity"
+            android:screenOrientation="portrait" />
+
     </application>
 
 </manifest>

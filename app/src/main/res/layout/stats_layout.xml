@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    style="?android:attr/buttonBarStyle"
+    android:id="@+id/stats_scroll"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <LinearLayout
+        android:id="@+id/filter_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/date_range"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="15dp"
+            android:layout_marginEnd="15dp"
+            android:gravity="center"
+            android:textStyle="bold"
+            android:textColor="@color/black"
+            android:textSize="@dimen/app_text_size_big"
+            android:layout_gravity="center_vertical"/>
+
+        <LinearLayout
+            android:id="@+id/totals"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_marginTop="20dp"
+            android:layout_marginStart="15dp"
+            android:layout_marginEnd="15dp">
+
+            <TextView
+                android:id="@+id/incomes"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="start"
+                android:textStyle="bold"
+                android:textColor="@color/black"
+                android:textSize="@dimen/app_text_size"
+                android:layout_gravity="center_vertical"/>
+
+            <TextView
+                android:id="@+id/outflows"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="start"
+                android:textStyle="bold"
+                android:textColor="@color/black"
+                android:textSize="@dimen/app_text_size"
+                android:layout_gravity="center_vertical"/>
+
+            <TextView
+                android:id="@+id/difference"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="start"
+                android:textStyle="bold"
+                android:textColor="@color/black"
+                android:textSize="@dimen/app_text_size"
+                android:layout_gravity="center_vertical"/>
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+</ScrollView>
