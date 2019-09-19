@@ -28,6 +28,7 @@ public class MainActivity extends BaseActivity {
     private PayListAdapter adapter;
     private Bundle filtered_bundle = new Bundle();
     private Context context;
+    private String date1 = "", date2 = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -117,6 +118,9 @@ public class MainActivity extends BaseActivity {
 
     private void openStats(){
         Intent intent = new Intent(getApplication(), StatsActivity.class);
+        intent.putExtra(START_DATE, date1);
+        intent.putExtra(END_DATE, date2);
+        intent.putIntegerArrayListExtra(URNO_LIST, paylist);
         startActivity(intent, null);
     }
 
@@ -145,7 +149,8 @@ public class MainActivity extends BaseActivity {
             c = dataManager.paytabSelect(filtered_bundle);
         else
             c = dataManager.paytabSelectAll();
-        String date1 = "", date2 = "";
+        date1 = "";
+        date2 = "";
         int idx = 1;
         while(c.moveToNext()){
             paylist.add(c.getInt(DataManager.PAYTAB_ID_IDX));

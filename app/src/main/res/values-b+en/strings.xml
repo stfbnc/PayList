@@ -22,4 +22,10 @@
     <string name="end_date">End date</string>
     <string name="record_update">Updated on</string>
     <string name="save_btn_string">You have not modified anything yet!</string>
+    <string name="total_incomes">Total incomes:</string>
+    <string name="total_outflows">Total outflows:</string>
+    <string name="total_difference">Net incomes:</string>
+    <string name="greater_income">Greater income:</string>
+    <string name="greater_outflow">Greater outflow:</string>
+    <string name="euro_symbol">€</string>
 </resources>

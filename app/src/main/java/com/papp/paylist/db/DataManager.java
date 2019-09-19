@@ -1,8 +1,9 @@
 package com.papp.paylist.db;
 
-import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
+import android.database.CursorIndexOutOfBoundsException;
+import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.os.Bundle;
@@ -85,14 +86,6 @@ public class DataManager {
                 " WHERE "+PAYTAB_ID+" = "+urno+";";
         Log.i("paytabUpdate() = ", query);
         db.execSQL(query);
-        /*ContentValues values = new ContentValues();
-        values.put(PAYTAB_DATE, bndl.getString(PAYTAB_DATE));
-        values.put(PAYTAB_LSTU, bndl.getString(PAYTAB_LSTU));
-        values.put(PAYTAB_DSCR, bndl.getString(PAYTAB_DSCR));
-        values.put(PAYTAB_EURO, bndl.getDouble(PAYTAB_EURO));
-        values.put(PAYTAB_TYPE, bndl.getString(PAYTAB_TYPE));
-        values.put(PAYTAB_IORO, bndl.getInt(PAYTAB_IORO));
-        db.update(PAYTAB, values, PAYTAB_ID+" = "+urno, null);*/
     }
 
     public void paytabDelete(Integer urno){
@@ -142,7 +135,36 @@ public class DataManager {
     }
 
     public Cursor paytabSelectById(Integer urno){
-        Cursor c = db.rawQuery("SELECT * FROM "+PAYTAB+" WHERE "+PAYTAB_ID+" = "+urno+";", null);
+        Cursor c = db.rawQuery("SELECT * FROM "+PAYTAB+" WHERE "+PAYTAB_ID+" = "+urno+";",null);
+        return c;
+    }
+
+    public double paytabSelectTotal(String urnos, int in_out){
+        Cursor c = db.rawQuery("SELECT SUM("+PAYTAB_EURO+") FROM "+PAYTAB+" WHERE "+PAYTAB_ID+" IN ("+urnos+") AND "+PAYTAB_IORO+" = "+in_out+";",null);
+        if(c.moveToFirst()){
+            double sum = c.getDouble(0);
+            c.close();
+            return sum;
+        }else{
+            return 0.0;
+        }
+    }
+
+    public String[] paytabSelectMax(String urnos, int in_out){
+        Cursor c = db.rawQuery("SELECT MAX("+PAYTAB_EURO+"), "+PAYTAB_DATE+" FROM "+PAYTAB+" WHERE "+PAYTAB_ID+" IN ("+urnos+") AND "+PAYTAB_IORO+" = "+in_out+";",null);
+        if(c.moveToFirst()){
+            double max = c.getDouble(0);
+            String date = c.getString(1);
+            c.close();
+            return new String[]{String.valueOf(max), date};
+        }else{
+            return new String[]{"0.0", ""};
+        }
+    }
+
+    public Cursor paytabSelectEuroGroupByDate(String urnos){
+        Cursor c = db.rawQuery("SELECT SUM("+PAYTAB_EURO+") FROM "+PAYTAB+" WHERE "+PAYTAB_ID+" IN ("+urnos+")"+
+                " GROUP BY "+PAYTAB_DATE+", "+PAYTAB_IORO+" ORDER BY "+PAYTAB_DATE+", "+PAYTAB_IORO+";",null);
         return c;
     }
 

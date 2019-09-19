@@ -12,6 +12,7 @@ public class BaseActivity extends AppCompatActivity {
     public static final String FILTER_TYPE = "FILTER_TYPE";
     public static final String FILTER_IORO = "FILTER_IORO";
     public static final String FILTER_DSCR = "FILTER_DSCR";
+    public static final String URNO_LIST = "URNO_LIST";
 
     public String getAppFormatDate(String date){
         return date.substring(6)+"/"+date.substring(4, 6)+"/"+date.substring(0, 4);

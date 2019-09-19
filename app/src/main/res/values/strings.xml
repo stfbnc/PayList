@@ -22,4 +22,10 @@
     <string name="end_date">Data finale</string>
     <string name="record_update">Modificato il</string>
     <string name="save_btn_string">Non hai modificato i dati!</string>
+    <string name="total_incomes">Entrate totali:</string>
+    <string name="total_outflows">Uscite totali:</string>
+    <string name="total_difference">Entrate nette:</string>
+    <string name="greater_income">Entrata maggiore:</string>
+    <string name="greater_outflow">Uscita maggiore:</string>
+    <string name="euro_symbol">€</string>
 </resources>
