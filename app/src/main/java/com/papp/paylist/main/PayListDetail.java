@@ -28,9 +28,9 @@ import java.util.Locale;
 
 public class PayListDetail extends BaseActivity {
 
-    private int clickedRadio = OUTFLOW;
+    private int clickedRadio = EXPENSE;
     private LinearLayout radio_lin;
-    private RadioButton income_radio, outflow_radio;
+    private RadioButton income_radio, expense_radio;
     private Spinner type_spinner;
     private ArrayList<String> spinner_list = new ArrayList<>();
     private ArrayAdapter<String> type_adapter;
@@ -129,12 +129,12 @@ public class PayListDetail extends BaseActivity {
             }
         });
 
-        outflow_radio = findViewById(R.id.radio_outflow);
-        outflow_radio.setChecked(true);
-        outflow_radio.setOnClickListener(new View.OnClickListener() {
+        expense_radio = findViewById(R.id.radio_expense);
+        expense_radio.setChecked(true);
+        expense_radio.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                clickedRadio = OUTFLOW;
+                clickedRadio = EXPENSE;
             }
         });
 
@@ -172,13 +172,13 @@ public class PayListDetail extends BaseActivity {
             oldIoro = c.getInt(DataManager.PAYTAB_IORO_IDX);
             if(oldIoro == INCOME) {
                 income_radio.setChecked(true);
-                outflow_radio.setChecked(false);
+                expense_radio.setChecked(false);
                 clickedRadio = INCOME;
                 euro.setTextColor(getResources().getColor(R.color.green));
-            }else if(oldIoro == OUTFLOW) {
+            }else if(oldIoro == EXPENSE) {
                 income_radio.setChecked(false);
-                outflow_radio.setChecked(true);
-                clickedRadio = OUTFLOW;
+                expense_radio.setChecked(true);
+                clickedRadio = EXPENSE;
                 euro.setTextColor(getResources().getColor(R.color.red));
             }
             oldDate = c.getString(DataManager.PAYTAB_DATE_IDX);
@@ -193,7 +193,7 @@ public class PayListDetail extends BaseActivity {
     public void onResume() {
         super.onResume();
         income_radio.setChecked(clickedRadio == INCOME);
-        outflow_radio.setChecked(clickedRadio == OUTFLOW);
+        expense_radio.setChecked(clickedRadio == EXPENSE);
     }
 
     private void setSpinnerItems(){

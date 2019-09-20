@@ -58,7 +58,7 @@ public class HistoryAdapter extends RecyclerView.Adapter<HistoryAdapter.ViewHold
                 int ioro = c.getInt(DataManager.UPDTAB_IORO_IDX);
                 if(ioro == BaseActivity.INCOME)
                     holder.money.setTextColor(ctx.getResources().getColor(R.color.green));
-                else if(ioro == BaseActivity.OUTFLOW)
+                else if(ioro == BaseActivity.EXPENSE)
                     holder.money.setTextColor(ctx.getResources().getColor(R.color.red));
                 BaseActivity base = new BaseActivity();
                 holder.data.setText(base.getAppFormatDate(c.getString(DataManager.UPDTAB_DATE_IDX)));

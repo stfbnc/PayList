@@ -25,7 +25,7 @@ public class DataManager {
     public static final String PAYTAB_DSCR = "DSCR";//description
     public static final String PAYTAB_EURO = "EURO";//amount of money
     public static final String PAYTAB_TYPE = "TYPE";//type of thr record
-    public static final String PAYTAB_IORO = "IORO";//income (0) or outflow (1)
+    public static final String PAYTAB_IORO = "IORO";//income (0) or expense (1)
     public static final int PAYTAB_ID_IDX = 0;
     public static final int PAYTAB_DATE_IDX = 1;
     public static final int PAYTAB_LSTU_IDX = 2;
@@ -43,7 +43,7 @@ public class DataManager {
     public static final String UPDTAB_DSCR = "DSCR";//description
     public static final String UPDTAB_EURO = "EURO";//amount of money
     public static final String UPDTAB_TYPE = "TYPE";//id of typtab
-    public static final String UPDTAB_IORO = "IORO";//income (0) or outflow (1)
+    public static final String UPDTAB_IORO = "IORO";//income (0) or expense (1)
     public static final String UPDTAB_UPAY = "UPAY";//id of paytab
     public static final int UPDTAB_ID_IDX = 0;
     public static final int UPDTAB_CDAT_IDX = 1;
@@ -163,8 +163,8 @@ public class DataManager {
     }
 
     public Cursor paytabSelectEuroGroupByDate(String urnos){
-        Cursor c = db.rawQuery("SELECT SUM("+PAYTAB_EURO+") FROM "+PAYTAB+" WHERE "+PAYTAB_ID+" IN ("+urnos+")"+
-                " GROUP BY "+PAYTAB_DATE+", "+PAYTAB_IORO+" ORDER BY "+PAYTAB_DATE+", "+PAYTAB_IORO+";",null);
+        Cursor c = db.rawQuery("SELECT "+PAYTAB_DATE+", "+PAYTAB_IORO+", SUM("+PAYTAB_EURO+") FROM "+PAYTAB+" WHERE "+PAYTAB_ID+" IN ("+urnos+")"+
+                " GROUP BY "+PAYTAB_DATE+", "+PAYTAB_IORO+" ORDER BY "+PAYTAB_DATE+";",null);
         return c;
     }
 

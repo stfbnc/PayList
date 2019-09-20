@@ -5,7 +5,7 @@ import android.support.v7.app.AppCompatActivity;
 public class BaseActivity extends AppCompatActivity {
 
     public static final int INCOME = 0;
-    public static final int OUTFLOW = 1;
+    public static final int EXPENSE = 1;
     public static final int BOTH = 2;
     public static final String START_DATE = "START_DATE";
     public static final String END_DATE = "END_DATE";

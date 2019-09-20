@@ -89,7 +89,8 @@ public class MainActivity extends BaseActivity {
         fab_stats.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                openStats();
+                if(!date1.equals("") && !date2.equals(""))
+                    openStats();
             }
         });
     }

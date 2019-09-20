@@ -188,11 +188,11 @@
                     android:layout_marginEnd="15dp"
                     android:text="@string/incomes"
                     android:textSize="@dimen/app_text_size"/>
-                <RadioButton android:id="@+id/radio_outflow"
+                <RadioButton android:id="@+id/radio_expense"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginEnd="15dp"
-                    android:text="@string/outflows"
+                    android:text="@string/expenses"
                     android:textSize="@dimen/app_text_size"/>
             </RadioGroup>
 

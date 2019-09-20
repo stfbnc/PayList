@@ -30,7 +30,7 @@ public class FilterActivity extends BaseActivity {
 
     public static final int TAG = 12;
     private int clickedRadio = BOTH;
-    private RadioButton income_radio, outflow_radio, both_radio;
+    private RadioButton income_radio, expense_radio, both_radio;
     private Spinner type_spinner;
     private ArrayList<String> spinner_list = new ArrayList<>();
     private ArrayAdapter<String> type_adapter;
@@ -67,7 +67,7 @@ public class FilterActivity extends BaseActivity {
         setSpinnerItems();
 
         income_radio = findViewById(R.id.radio_income);
-        outflow_radio = findViewById(R.id.radio_outflow);
+        expense_radio = findViewById(R.id.radio_expense);
         both_radio = findViewById(R.id.radio_both);
 
         income_radio.setChecked(false);
@@ -79,11 +79,11 @@ public class FilterActivity extends BaseActivity {
             }
         });
 
-        outflow_radio.setChecked(false);
-        outflow_radio.setOnClickListener(new View.OnClickListener() {
+        expense_radio.setChecked(false);
+        expense_radio.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                clickedRadio = OUTFLOW;
+                clickedRadio = EXPENSE;
                 both_radio.setChecked(false);
             }
         });
@@ -94,7 +94,7 @@ public class FilterActivity extends BaseActivity {
             public void onClick(View v) {
                 clickedRadio = BOTH;
                 income_radio.setChecked(false);
-                outflow_radio.setChecked(false);
+                expense_radio.setChecked(false);
             }
         });
 
@@ -164,7 +164,7 @@ public class FilterActivity extends BaseActivity {
     public void onResume() {
         super.onResume();
         income_radio.setChecked(clickedRadio == INCOME);
-        outflow_radio.setChecked(clickedRadio == OUTFLOW);
+        expense_radio.setChecked(clickedRadio == EXPENSE);
         both_radio.setChecked(clickedRadio == BOTH);
     }
 

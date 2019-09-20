@@ -13,9 +13,10 @@
     <string name="delete_button">Elimina</string>
     <string name="filter_button">Filtra</string>
     <string name="income">Entrata</string>
-    <string name="outflow">Uscita</string>
+    <string name="expense">Uscita</string>
     <string name="incomes">Entrate</string>
-    <string name="outflows">Uscite</string>
+    <string name="expenses">Uscite</string>
+    <string name="net">Netto</string>
     <string name="in_and_out">Entrambe</string>
     <string name="empty_type">-</string>
     <string name="start_date">Data iniziale</string>
@@ -23,9 +24,12 @@
     <string name="record_update">Modificato il</string>
     <string name="save_btn_string">Non hai modificato i dati!</string>
     <string name="total_incomes">Entrate totali:</string>
-    <string name="total_outflows">Uscite totali:</string>
+    <string name="total_expenses">Uscite totali:</string>
     <string name="total_difference">Entrate nette:</string>
     <string name="greater_income">Entrata maggiore:</string>
-    <string name="greater_outflow">Uscita maggiore:</string>
+    <string name="greater_expense">Uscita maggiore:</string>
     <string name="euro_symbol">€</string>
+    <string name="daily_report">Report giornaliero</string>
+    <string name="monthly_report">Report mensile</string>
+    <string name="yearly_report">Report annuale</string>
 </resources>

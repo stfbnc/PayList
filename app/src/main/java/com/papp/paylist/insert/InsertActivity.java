@@ -25,8 +25,8 @@ import java.util.Locale;
 
 public class InsertActivity extends BaseActivity {
 
-    private int clickedRadio = OUTFLOW;
-    private RadioButton income_radio, outflow_radio;
+    private int clickedRadio = EXPENSE;
+    private RadioButton income_radio, expense_radio;
     private Spinner type_spinner;
     private ArrayList<String> spinner_list = new ArrayList<>();
     private ArrayAdapter<String> type_adapter;
@@ -89,12 +89,12 @@ public class InsertActivity extends BaseActivity {
             }
         });
 
-        outflow_radio = findViewById(R.id.radio_outflow);
-        outflow_radio.setChecked(true);
-        outflow_radio.setOnClickListener(new View.OnClickListener() {
+        expense_radio = findViewById(R.id.radio_expense);
+        expense_radio.setChecked(true);
+        expense_radio.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                clickedRadio = OUTFLOW;
+                clickedRadio = EXPENSE;
             }
         });
 
@@ -125,7 +125,7 @@ public class InsertActivity extends BaseActivity {
     public void onResume() {
         super.onResume();
         income_radio.setChecked(clickedRadio == INCOME);
-        outflow_radio.setChecked(clickedRadio == OUTFLOW);
+        expense_radio.setChecked(clickedRadio == EXPENSE);
     }
 
     private void setSpinnerItems(){

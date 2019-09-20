@@ -73,7 +73,7 @@ public class PayListAdapter extends RecyclerView.Adapter<PayListAdapter.ViewHold
                 int ioro = c.getInt(DataManager.PAYTAB_IORO_IDX);
                 if(ioro == BaseActivity.INCOME)
                     holder.money.setTextColor(ctx.getResources().getColor(R.color.green));
-                else if(ioro == BaseActivity.OUTFLOW)
+                else if(ioro == BaseActivity.EXPENSE)
                     holder.money.setTextColor(ctx.getResources().getColor(R.color.red));
                 BaseActivity base = new BaseActivity();
                 holder.data.setText(base.getAppFormatDate(c.getString(DataManager.PAYTAB_DATE_IDX)));
