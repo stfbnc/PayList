@@ -162,6 +162,12 @@ public class DataManager {
         }
     }
 
+    public Cursor paytabSelectEuroGroupByType(String urnos, int in_out){
+        Cursor c = db.rawQuery("SELECT SUM("+PAYTAB_EURO+"), "+PAYTAB_TYPE+" FROM "+PAYTAB+" WHERE "+PAYTAB_ID+" IN ("+urnos+")"+
+                " AND "+PAYTAB_IORO+" = "+in_out+" GROUP BY "+PAYTAB_TYPE+";",null);
+        return c;
+    }
+
     public Cursor paytabSelectEuroGroupByDate(String urnos){
         Cursor c = db.rawQuery("SELECT "+PAYTAB_DATE+", "+PAYTAB_IORO+", SUM("+PAYTAB_EURO+") FROM "+PAYTAB+" WHERE "+PAYTAB_ID+" IN ("+urnos+")"+
                 " GROUP BY "+PAYTAB_DATE+", "+PAYTAB_IORO+" ORDER BY "+PAYTAB_DATE+";",null);

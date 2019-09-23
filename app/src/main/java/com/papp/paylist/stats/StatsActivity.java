@@ -3,16 +3,24 @@ package com.papp.paylist.stats;
 import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
+import android.graphics.Color;
 import android.graphics.Paint;
+import android.graphics.Typeface;
 import android.os.Bundle;
+import android.text.SpannableString;
+import android.text.style.ForegroundColorSpan;
+import android.text.style.RelativeSizeSpan;
+import android.text.style.StyleSpan;
 import android.util.Log;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.github.mikephil.charting.animation.Easing;
 import com.github.mikephil.charting.charts.BarChart;
 import com.github.mikephil.charting.charts.CombinedChart;
 import com.github.mikephil.charting.charts.LineChart;
+import com.github.mikephil.charting.charts.PieChart;
 import com.github.mikephil.charting.components.AxisBase;
 import com.github.mikephil.charting.components.Legend;
 import com.github.mikephil.charting.components.XAxis;
@@ -24,10 +32,16 @@ import com.github.mikephil.charting.data.CombinedData;
 import com.github.mikephil.charting.data.Entry;
 import com.github.mikephil.charting.data.LineData;
 import com.github.mikephil.charting.data.LineDataSet;
+import com.github.mikephil.charting.data.PieData;
+import com.github.mikephil.charting.data.PieDataSet;
+import com.github.mikephil.charting.data.PieEntry;
 import com.github.mikephil.charting.formatter.IAxisValueFormatter;
 import com.github.mikephil.charting.formatter.IndexAxisValueFormatter;
+import com.github.mikephil.charting.formatter.PercentFormatter;
 import com.github.mikephil.charting.formatter.ValueFormatter;
 import com.github.mikephil.charting.interfaces.datasets.ILineDataSet;
+import com.github.mikephil.charting.utils.ColorTemplate;
+import com.github.mikephil.charting.utils.MPPointF;
 import com.papp.paylist.R;
 import com.papp.paylist.base.BaseActivity;
 import com.papp.paylist.db.DataManager;
@@ -91,20 +105,30 @@ public class StatsActivity extends BaseActivity {
         max_out.setText(str);
 
         if(getDatesList(date1, date2)) {
+            TextView tv = findViewById(R.id.daily_chart).findViewById(R.id.title);
+            tv.setText(getResources().getString(R.string.daily_report));
             getDailyInExp();
-            getLineChart(R.id.daily_chart, dayList);
+            getLineChart(R.id.daily_chart, dayList, incomes, expenses);
             if(monthList.size() > 1) {
-                //getMonthlyInExp();
-                getLineChart(R.id.monthly_chart, monthList);
-            }else{
+                tv = findViewById(R.id.monthly_chart).findViewById(R.id.title);
+                tv.setText(getResources().getString(R.string.monthly_report));
+                getLineChart(R.id.monthly_chart, monthList, getMonthlyInExp(INCOME), getMonthlyInExp(EXPENSE));
+            }else {
                 findViewById(R.id.monthly_chart).setVisibility(View.GONE);
             }
             if(yearList.size() > 1) {
-                //getYearlyInExp();
-                getLineChart(R.id.yearly_chart, yearList);
-            }else{
+                tv = findViewById(R.id.yearly_chart).findViewById(R.id.title);
+                tv.setText(getResources().getString(R.string.yearly_report));
+                getLineChart(R.id.yearly_chart, yearList, getYearlyInExp(INCOME), getYearlyInExp(EXPENSE));
+            }else {
                 findViewById(R.id.yearly_chart).setVisibility(View.GONE);
             }
+            tv = findViewById(R.id.incomes_pie).findViewById(R.id.title);
+            tv.setText(getResources().getString(R.string.incomes));
+            getPieChart(R.id.incomes_pie, INCOME);
+            tv = findViewById(R.id.expenses_pie).findViewById(R.id.title);
+            tv.setText(getResources().getString(R.string.expenses));
+            getPieChart(R.id.expenses_pie, EXPENSE);
         }
     }
 
@@ -214,16 +238,45 @@ public class StatsActivity extends BaseActivity {
 
     private ArrayList<Entry> getMonthlyInExp(int in_out){
         ArrayList<Entry> arr = new ArrayList<>();
-        ArrayList<Entry> mainArr;
+        for(int i = 0; i < monthList.size(); i++)
+            arr.add(new Entry(i, 0.0f));
+        ArrayList<Entry> mainArr = new ArrayList<>();
         if(in_out == INCOME)
             mainArr = incomes;
         else if(in_out == EXPENSE)
             mainArr = expenses;
-
+        for(int i = 0; i < dayList.size(); i++){
+            for(int j = 0; j < monthList.size(); j++){
+                if(dayList.get(i).substring(3).equals(monthList.get(j))){
+                    arr.get(j).setY(arr.get(j).getY()+mainArr.get(i).getY());
+                    break;
+                }
+            }
+        }
         return arr;
     }
 
-    private void getLineChart(int chartView, ArrayList<String> list){
+    private ArrayList<Entry> getYearlyInExp(int in_out){
+        ArrayList<Entry> arr = new ArrayList<>();
+        for(int i = 0; i < yearList.size(); i++)
+            arr.add(new Entry(i, 0.0f));
+        ArrayList<Entry> mainArr = new ArrayList<>();
+        if(in_out == INCOME)
+            mainArr = incomes;
+        else if(in_out == EXPENSE)
+            mainArr = expenses;
+        for(int i = 0; i < dayList.size(); i++){
+            for(int j = 0; j < yearList.size(); j++){
+                if(dayList.get(i).substring(3).equals(yearList.get(j))){
+                    arr.get(j).setY(arr.get(j).getY()+mainArr.get(i).getY());
+                    break;
+                }
+            }
+        }
+        return arr;
+    }
+
+    private void getLineChart(int chartView, ArrayList<String> list, ArrayList<Entry> in, ArrayList<Entry> out){
         LinearLayout ll = findViewById(chartView);
         CombinedChart combChart = ll.findViewById(R.id.inout_comb);
         combChart.getDescription().setEnabled(false);
@@ -246,13 +299,13 @@ public class StatsActivity extends BaseActivity {
         l.setDrawInside(false);
 
         //Line Data
-        LineDataSet inSet = new LineDataSet(incomes, getResources().getString(R.string.incomes)+" ("+getResources().getString(R.string.euro_symbol)+")");
+        LineDataSet inSet = new LineDataSet(in, getResources().getString(R.string.incomes)+" ("+getResources().getString(R.string.euro_symbol)+")");
         inSet.setColor(getResources().getColor(R.color.green));
         inSet.setLineWidth(2f);
         inSet.setDrawCircles(true);
         inSet.setCircleColor(getResources().getColor(R.color.green));
         inSet.setDrawValues(false);
-        LineDataSet outSet = new LineDataSet(expenses, getResources().getString(R.string.expenses)+" ("+getResources().getString(R.string.euro_symbol)+")");
+        LineDataSet outSet = new LineDataSet(out, getResources().getString(R.string.expenses)+" ("+getResources().getString(R.string.euro_symbol)+")");
         outSet.setColor(getResources().getColor(R.color.red));
         outSet.setLineWidth(2f);
         outSet.setDrawCircles(true);
@@ -264,7 +317,7 @@ public class StatsActivity extends BaseActivity {
         LineData lineData = new LineData(dataSets);
 
         //bar data
-        BarDataSet barSet = new BarDataSet(getDiffEntries(incomes, expenses), getResources().getString(R.string.net)+" ("+getResources().getString(R.string.euro_symbol)+")");
+        BarDataSet barSet = new BarDataSet(getDiffEntries(in, out), getResources().getString(R.string.net)+" ("+getResources().getString(R.string.euro_symbol)+")");
         barSet.setDrawIcons(false);
         barSet.setColor(getResources().getColor(R.color.fade));
         BarData barData = new BarData(barSet);
@@ -275,6 +328,76 @@ public class StatsActivity extends BaseActivity {
         data.setData(barData);
         combChart.setData(data);
         combChart.invalidate();
+    }
+
+    private ArrayList<Integer> getPieColors(){
+        ArrayList<Integer> clrs = new ArrayList<>();
+        for (int c : ColorTemplate.VORDIPLOM_COLORS)
+            clrs.add(c);
+        for (int c : ColorTemplate.JOYFUL_COLORS)
+            clrs.add(c);
+        for (int c : ColorTemplate.COLORFUL_COLORS)
+            clrs.add(c);
+        for (int c : ColorTemplate.LIBERTY_COLORS)
+            clrs.add(c);
+        for (int c : ColorTemplate.PASTEL_COLORS)
+            clrs.add(c);
+        clrs.add(ColorTemplate.getHoloBlue());
+        return clrs;
+    }
+
+    private void getPieChart(int chartView, int in_out){
+        ArrayList<PieEntry> entries = new ArrayList<>();
+        DataManager dm = new DataManager(this);
+        Cursor c = dm.paytabSelectEuroGroupByType(dbUrnosFormat, in_out);
+        while (c.moveToNext())
+            entries.add(new PieEntry((float)c.getDouble(0), c.getString(1)));
+        c.close();
+
+        PieDataSet dataSet = new PieDataSet(entries, "");
+        dataSet.setDrawIcons(false);
+        dataSet.setSliceSpace(3f);
+        dataSet.setIconsOffset(new MPPointF(0, 40));
+        dataSet.setSelectionShift(5f);
+        dataSet.setColors(getPieColors());
+
+        LinearLayout ll = findViewById(chartView);
+        PieChart chart = ll.findViewById(R.id.inout_pie);
+        chart.setUsePercentValues(true);
+        chart.setDrawEntryLabels(false);
+        chart.getDescription().setEnabled(false);
+        chart.setExtraOffsets(5, 10, 5, 5);
+        chart.setDragDecelerationFrictionCoef(0.95f);
+        chart.setDrawHoleEnabled(true);
+        chart.setHoleColor(getResources().getColor(R.color.white));
+        chart.setTransparentCircleColor(getResources().getColor(R.color.white));
+        chart.setTransparentCircleAlpha(110);
+        chart.setHoleRadius(48f);
+        chart.setTransparentCircleRadius(51f);
+        //chart.setDrawCenterText(true);
+        chart.setRotationAngle(0);
+        chart.setRotationEnabled(true);
+        chart.setHighlightPerTapEnabled(true);
+        chart.animateY(1400, Easing.EaseInOutQuad);
+        //chart.setEntryLabelColor(getResources().getColor(R.color.black));
+        //chart.setEntryLabelTextSize(12f);
+
+        Legend l = chart.getLegend();
+        l.setVerticalAlignment(Legend.LegendVerticalAlignment.TOP);
+        l.setHorizontalAlignment(Legend.LegendHorizontalAlignment.RIGHT);
+        l.setOrientation(Legend.LegendOrientation.VERTICAL);
+        l.setDrawInside(false);
+        l.setXEntrySpace(7f);
+        l.setYEntrySpace(0f);
+        l.setYOffset(0f);
+
+        PieData data = new PieData(dataSet);
+        data.setValueFormatter(new PercentFormatter(chart));
+        data.setValueTextSize(11f);
+        data.setValueTextColor(getResources().getColor(R.color.black));
+        chart.setData(data);
+        chart.highlightValues(null);
+        chart.invalidate();
     }
 
 }

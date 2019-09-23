@@ -9,7 +9,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:layout_marginBottom="10dp">
 
         <TextView
             android:id="@+id/date_range"
@@ -103,40 +104,6 @@
             android:layout_marginEnd="12dp"
             android:background="@color/colorPrimary"/>
 
-        <!--LinearLayout
-            android:id="@+id/lin_comb"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:layout_marginTop="20dp"
-            android:layout_marginStart="12dp"
-            android:layout_marginEnd="12dp">
-
-            <TextView
-                android:id="@+id/title"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:gravity="center"
-                android:textColor="@color/black"
-                android:textSize="@dimen/app_text_size_big"
-                android:textStyle="bold"
-                android:text="@string/daily_report"/>
-
-            <com.github.mikephil.charting.charts.CombinedChart
-                android:id="@+id/inout_comb"
-                android:layout_width="match_parent"
-                android:layout_height="250dp"
-                android:layout_marginTop="10dp"/>
-
-            <TextView
-                android:id="@+id/div"
-                android:layout_width="match_parent"
-                android:layout_height="2dp"
-                android:layout_marginTop="10dp"
-                android:background="@color/colorPrimary"/>
-
-        </LinearLayout-->
-
         <include layout="@layout/combchart_layout"
             android:id="@+id/daily_chart"/>
 
@@ -146,65 +113,11 @@
         <include layout="@layout/combchart_layout"
             android:id="@+id/yearly_chart"/>
 
-        <!--TextView
-            android:id="@+id/monthly_title"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
-            android:layout_marginStart="12dp"
-            android:layout_marginEnd="12dp"
-            android:gravity="center"
-            android:textColor="@color/black"
-            android:textSize="@dimen/app_text_size_big"
-            android:textStyle="bold"
-            android:text="@string/monthly_report"/>
+        <include layout="@layout/piechart_layout"
+            android:id="@+id/incomes_pie"/>
 
-        <com.github.mikephil.charting.charts.CombinedChart
-            android:id="@+id/inout_comb_month"
-            android:layout_width="match_parent"
-            android:layout_height="250dp"
-            android:layout_marginTop="10dp"
-            android:layout_marginStart="15dp"
-            android:layout_marginEnd="15dp"/>
-
-        <TextView
-            android:id="@+id/div4"
-            android:layout_width="match_parent"
-            android:layout_height="2dp"
-            android:layout_marginTop="10dp"
-            android:layout_marginStart="12dp"
-            android:layout_marginEnd="12dp"
-            android:background="@color/colorPrimary"/>
-
-        <TextView
-            android:id="@+id/yearly_title"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
-            android:layout_marginStart="12dp"
-            android:layout_marginEnd="12dp"
-            android:gravity="center"
-            android:textColor="@color/black"
-            android:textSize="@dimen/app_text_size_big"
-            android:textStyle="bold"
-            android:text="@string/yearly_report"/>
-
-        <com.github.mikephil.charting.charts.CombinedChart
-            android:id="@+id/inout_comb_year"
-            android:layout_width="match_parent"
-            android:layout_height="250dp"
-            android:layout_marginTop="10dp"
-            android:layout_marginStart="15dp"
-            android:layout_marginEnd="15dp"/>
-
-        <TextView
-            android:id="@+id/div5"
-            android:layout_width="match_parent"
-            android:layout_height="2dp"
-            android:layout_marginTop="10dp"
-            android:layout_marginStart="12dp"
-            android:layout_marginEnd="12dp"
-            android:background="@color/colorPrimary"/-->
+        <include layout="@layout/piechart_layout"
+            android:id="@+id/expenses_pie"/>
 
     </LinearLayout>
 
