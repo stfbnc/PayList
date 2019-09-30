@@ -82,14 +82,14 @@ public class StatsActivity extends BaseActivity {
         period.setText(str);
         TextView tot_in = findViewById(R.id.incomes);
         double in = getTotalIncomes();
-        str = getResources().getString(R.string.total_incomes)+" "+String.valueOf(in)+" "+getResources().getString(R.string.euro_symbol);
+        str = getResources().getString(R.string.total_incomes)+" "+String.format("%.2f", in)+" "+getResources().getString(R.string.euro_symbol);
         tot_in.setText(str);
         TextView tot_out = findViewById(R.id.expenses);
         double out = getTotalExpenses();
-        str = getResources().getString(R.string.total_expenses)+" "+String.valueOf(out)+" "+getResources().getString(R.string.euro_symbol);
+        str = getResources().getString(R.string.total_expenses)+" "+String.format("%.2f", out)+" "+getResources().getString(R.string.euro_symbol);
         tot_out.setText(str);
         TextView tot_diff = findViewById(R.id.difference);
-        str = getResources().getString(R.string.total_difference)+" "+String.valueOf(in-out)+" "+getResources().getString(R.string.euro_symbol);
+        str = getResources().getString(R.string.total_difference)+" "+String.format("%.2f", in-out)+" "+getResources().getString(R.string.euro_symbol);
         tot_diff.setText(str);
         TextView max_in = findViewById(R.id.max_income);
         String[] euro_date = getMaxIncome();
@@ -374,13 +374,10 @@ public class StatsActivity extends BaseActivity {
         chart.setTransparentCircleAlpha(110);
         chart.setHoleRadius(48f);
         chart.setTransparentCircleRadius(51f);
-        //chart.setDrawCenterText(true);
         chart.setRotationAngle(0);
         chart.setRotationEnabled(true);
         chart.setHighlightPerTapEnabled(true);
         chart.animateY(1400, Easing.EaseInOutQuad);
-        //chart.setEntryLabelColor(getResources().getColor(R.color.black));
-        //chart.setEntryLabelTextSize(12f);
 
         Legend l = chart.getLegend();
         l.setVerticalAlignment(Legend.LegendVerticalAlignment.TOP);

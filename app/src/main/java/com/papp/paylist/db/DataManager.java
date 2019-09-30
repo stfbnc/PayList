@@ -13,6 +13,7 @@ import com.papp.paylist.R;
 import com.papp.paylist.base.BaseActivity;
 
 import java.util.ArrayList;
+import java.util.Locale;
 
 public class DataManager {
 
@@ -156,7 +157,10 @@ public class DataManager {
             double max = c.getDouble(0);
             String date = c.getString(1);
             c.close();
-            return new String[]{String.valueOf(max), date};
+            if(date != null)
+                return new String[]{String.format("%.2f", max), date};
+            else
+                return new String[]{"0.0", ""};
         }else{
             return new String[]{"0.0", ""};
         }
