@@ -167,8 +167,20 @@ public class StatsActivity extends BaseActivity {
                 y.add(sdf_year.format(start.getTime()));
                 start.add(Calendar.DAY_OF_YEAR, 1);
             }
-            monthList = new ArrayList<>(new HashSet<>(m));
-            yearList = new ArrayList<>(new HashSet<>(y));
+            monthList = new ArrayList<>();
+            monthList.add(m.get(0));
+            for(int i = 1; i < m.size(); i++){
+                if(!m.get(i).equals(m.get(i-1))){
+                    monthList.add(m.get(i));
+                }
+            }
+            yearList = new ArrayList<>();
+            yearList.add(y.get(0));
+            for(int i = 1; i < y.size(); i++){
+                if(!y.get(i).equals(y.get(i-1))){
+                    yearList.add(y.get(i));
+                }
+            }
             return true;
         }catch (ParseException pe){
             return false;
@@ -267,7 +279,7 @@ public class StatsActivity extends BaseActivity {
             mainArr = expenses;
         for(int i = 0; i < dayList.size(); i++){
             for(int j = 0; j < yearList.size(); j++){
-                if(dayList.get(i).substring(3).equals(yearList.get(j))){
+                if(dayList.get(i).substring(6).equals(yearList.get(j))){
                     arr.get(j).setY(arr.get(j).getY()+mainArr.get(i).getY());
                     break;
                 }

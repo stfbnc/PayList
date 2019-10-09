@@ -2,5 +2,6 @@
 <resources>
     <dimen name="app_text_size">18sp</dimen>
     <dimen name="app_text_size_big">20sp</dimen>
+    <dimen name="img_box_size_list">22dp</dimen>
     <dimen name="img_box_size">34dp</dimen>
 </resources>

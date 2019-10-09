@@ -21,7 +21,7 @@
     <string name="empty_type">-</string>
     <string name="start_date">Data iniziale</string>
     <string name="end_date">Data finale</string>
-    <string name="record_update">Modificato il</string>
+    <string name="record_update">Modificato:</string>
     <string name="save_btn_string">Non hai modificato i dati!</string>
     <string name="total_incomes">Entrate totali:</string>
     <string name="total_expenses">Uscite totali:</string>

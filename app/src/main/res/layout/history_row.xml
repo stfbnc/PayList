@@ -29,8 +29,8 @@
 
         <ImageView
             android:id="@+id/img_type"
-            android:layout_width="@dimen/img_box_size"
-            android:layout_height="@dimen/img_box_size"
+            android:layout_width="@dimen/img_box_size_list"
+            android:layout_height="@dimen/img_box_size_list"
             android:gravity="center"
             android:layout_gravity="center"
             android:scaleType="fitCenter"
@@ -40,10 +40,9 @@
         <TextView
             android:id="@+id/type"
             android:layout_width="match_parent"
-            android:layout_height="@dimen/img_box_size"
+            android:layout_height="@dimen/img_box_size_list"
             android:gravity="start|center_vertical"
             android:layout_gravity="center"
-            android:textStyle="bold"
             android:textSize="@dimen/app_text_size"
             android:layout_marginStart="10dp"
             android:paddingStart="5dp"
@@ -62,8 +61,8 @@
 
         <ImageView
             android:id="@+id/img_money"
-            android:layout_width="@dimen/img_box_size"
-            android:layout_height="@dimen/img_box_size"
+            android:layout_width="@dimen/img_box_size_list"
+            android:layout_height="@dimen/img_box_size_list"
             android:gravity="center"
             android:layout_gravity="center"
             android:scaleType="fitCenter"
@@ -73,10 +72,9 @@
         <TextView
             android:id="@+id/money"
             android:layout_width="0dp"
-            android:layout_height="@dimen/img_box_size"
+            android:layout_height="@dimen/img_box_size_list"
             android:gravity="start|center_vertical"
             android:layout_gravity="center"
-            android:textStyle="bold"
             android:textSize="@dimen/app_text_size"
             android:layout_marginStart="10dp"
             android:layout_marginEnd="15dp"
@@ -97,8 +95,8 @@
 
         <ImageView
             android:id="@+id/img_data"
-            android:layout_width="@dimen/img_box_size"
-            android:layout_height="@dimen/img_box_size"
+            android:layout_width="@dimen/img_box_size_list"
+            android:layout_height="@dimen/img_box_size_list"
             android:gravity="center"
             android:layout_gravity="center"
             android:scaleType="fitCenter"
@@ -108,10 +106,9 @@
         <TextView
             android:id="@+id/data"
             android:layout_width="match_parent"
-            android:layout_height="@dimen/img_box_size"
+            android:layout_height="@dimen/img_box_size_list"
             android:gravity="start|center_vertical"
             android:layout_gravity="center"
-            android:textStyle="bold"
             android:textSize="@dimen/app_text_size"
             android:layout_marginStart="10dp"
             android:paddingStart="5dp"
@@ -130,8 +127,8 @@
 
         <ImageView
             android:id="@+id/img_descr"
-            android:layout_width="@dimen/img_box_size"
-            android:layout_height="@dimen/img_box_size"
+            android:layout_width="@dimen/img_box_size_list"
+            android:layout_height="@dimen/img_box_size_list"
             android:gravity="center"
             android:layout_gravity="center"
             android:scaleType="fitCenter"
@@ -145,7 +142,6 @@
             android:gravity="top|start"
             android:layout_gravity="center"
             android:maxLines="10"
-            android:textStyle="bold"
             android:textSize="@dimen/app_text_size"
             android:layout_marginStart="10dp"
             android:paddingStart="5dp"
