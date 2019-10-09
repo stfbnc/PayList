@@ -19,7 +19,10 @@ import com.papp.paylist.R;
 import com.papp.paylist.db.DataManager;
 import com.papp.paylist.stats.StatsActivity;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Locale;
 
 public class MainActivity extends BaseActivity {
 
@@ -58,7 +61,8 @@ public class MainActivity extends BaseActivity {
                 h_det.showHistory();
             }
         });
-        getPayList(false);
+        //getPayList(false);
+        getListAtStart();
 
         FloatingActionButton fab_all = findViewById(R.id.fab_all);
         fab_all.setOnClickListener(new View.OnClickListener() {
@@ -140,6 +144,25 @@ public class MainActivity extends BaseActivity {
                 Log.d("filterResult", "Filter Result: "+resultCode);
             }
         }
+    }
+
+    private void getListAtStart(){
+        Calendar calendar = Calendar.getInstance();
+        SimpleDateFormat formatter = new SimpleDateFormat("yyyyMMdd", Locale.ITALY);
+        String today = formatter.format(calendar.getTime());
+        String firstOfMonth = "";
+        if(!today.substring(6).equals("01")) {
+            firstOfMonth = today.substring(0, 6)+"01";
+            filtered_bundle.putString(START_DATE, firstOfMonth);
+            filtered_bundle.putString(END_DATE, today);
+        }else{
+            filtered_bundle.putString(START_DATE, today);
+            filtered_bundle.putString(END_DATE, firstOfMonth);
+        }
+        filtered_bundle.putString(FILTER_TYPE, getResources().getString(R.string.empty_type));
+        filtered_bundle.putInt(FILTER_IORO, BOTH);
+        filtered_bundle.putString(FILTER_DSCR, "");
+        getPayList(true);
     }
 
     private void getPayList(boolean filterd){
