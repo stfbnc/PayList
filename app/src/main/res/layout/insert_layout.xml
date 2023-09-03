@@ -111,7 +111,7 @@
                 android:background="@drawable/round_corners_spinner"
                 android:popupBackground="@drawable/round_corners_container"/>
 
-            <android.support.design.widget.FloatingActionButton
+            <com.google.android.material.floatingactionbutton.FloatingActionButton
                 android:id="@+id/fab_new_type"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
